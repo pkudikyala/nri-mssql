@@ -9,6 +9,9 @@ Unreleased section should follow [Release Toolkit](https://github.com/newrelic/r
 
 ## Unreleased
 
+### bugfix
+- Replaced `GETUTCDATE()` with `SYSDATETIME()` in DMV slow query lookback filter to correctly match `last_execution_time` (which is local server time) and prevent queries from being erroneously excluded on servers not in UTC
+
 ## v2.31.0 - 2026-06-02
 
 ### 🚀 Enhancements
