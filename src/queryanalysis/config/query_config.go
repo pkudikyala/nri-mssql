@@ -48,7 +48,7 @@ WITH AggregatedStats AS (
         CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) AS qt
         CROSS APPLY sys.dm_exec_plan_attributes(qs.plan_handle) AS pa
     WHERE
-        qs.last_execution_time >= DATEADD(SECOND, -@IntervalSeconds, GETUTCDATE())
+        qs.last_execution_time >= DATEADD(SECOND, -@IntervalSeconds, SYSDATETIME())
         AND qs.execution_count > 0
         AND pa.attribute = 'dbid'
         AND qt.text IS NOT NULL
@@ -396,7 +396,7 @@ WITH AggregatedStats AS (
         CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) AS qt
         CROSS APPLY sys.dm_exec_plan_attributes(qs.plan_handle) AS pa
     WHERE
-        qs.last_execution_time >= DATEADD(SECOND, -@IntervalSeconds, GETUTCDATE())
+        qs.last_execution_time >= DATEADD(SECOND, -@IntervalSeconds, SYSDATETIME())
         AND qs.execution_count > 0
         AND pa.attribute = 'dbid'
         AND qt.text IS NOT NULL
@@ -413,7 +413,6 @@ WITH AggregatedStats AS (
 
 SELECT TOP (@Limit)
     s.query_id,
-    
     -- Extract the actual statement text using decoded offsets
     LEFT(SUBSTRING(
         qt_final.text, 
