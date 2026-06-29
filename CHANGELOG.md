@@ -12,6 +12,20 @@ Unreleased section should follow [Release Toolkit](https://github.com/newrelic/r
 ### bugfix
 - Replaced `GETUTCDATE()` with `SYSDATETIME()` in DMV slow query lookback filter to correctly match `last_execution_time` (which is local server time) and prevent queries from being erroneously excluded on servers not in UTC
 
+## v2.33.0 - 2026-06-16
+
+### 🛡️ Security notices
+- Updated golang to v1.26.4
+- Replaced goversioninfo with go-winres for Windows exe metadata generation
+
+### 🚀 Enhancements
+- Logged per-query execution duration to help diagnose slow queries during peak load
+
+### 🐞 Bug fixes
+- Enforced per-query execution timeout via `context.WithTimeout` so blocked queries are cancelled at the configured `TIMEOUT` instead of stalling the integration
+- Fixed `IsSystemDatabase` filtering out queries with `NULL` database names, which caused `MSSQLTopSlowQueries` to drop data on servers running cross-database ETL workloads
+- Routed QPM queries through `SQLConnection.Queryx` so the per-query timeout applies on all query paths
+
 ## v2.31.0 - 2026-06-02
 
 ### 🚀 Enhancements
