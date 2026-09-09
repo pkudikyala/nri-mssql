@@ -9,6 +9,9 @@ Unreleased section should follow [Release Toolkit](https://github.com/newrelic/r
 
 ## Unreleased
 
+### Security
+- Signed the Windows `nri-mssql.exe` binary directly during the installer build, in addition to the existing `.msi` signature. Previously only the `.msi` wrapper was signed, leaving the packaged/zipped exe itself unsigned — which caused Microsoft Defender/VirusTotal false-positive malware detections (e.g. `Trojan:Script/Wacatac.B!ml`) on customer hosts.
+
 ## v2.38.0 - 2026-09-01
 
 ### 🛡️ Security notices
